@@ -22,7 +22,3 @@
 {"model": "pretrained_model/TimeMoE-50M", "data": "eval_data/Weather.csv", "context_length": 1024, "prediction_length": 192, "mse": 0.2097286581993103, "mae": 0.25999176502227783}
 {"model": "pretrained_model/TimeMoE-50M", "data": "eval_data/Weather.csv", "context_length": 2048, "prediction_length": 336, "mse": 0.2736741900444031, "mae": 0.3086121678352356}
 {"model": "pretrained_model/TimeMoE-50M", "data": "eval_data/Weather.csv", "context_length": 3072, "prediction_length": 720, "mse": 0.4181396961212158, "mae": 0.40569981932640076}
-{"model": "pretrained_model/TimeMoE-50M", "data": "eval_data/ECL.csv", "context_length": 512, "prediction_length": 96, "mse": 0.10600759088993073, "mae": 0.20594146847724915}
-{"model": "pretrained_model/TimeMoE-50M", "data": "eval_data/ECL.csv", "context_length": 1024, "prediction_length": 192, "mse": 0.12376220524311066, "mae": 0.22154562175273895}
-{"model": "pretrained_model/TimeMoE-50M", "data": "eval_data/ECL.csv", "context_length": 2048, "prediction_length": 336, "mse": 0.14786531031131744, "mae": 0.23943883180618286}
-{"model": "pretrained_model/TimeMoE-50M", "data": "eval_data/ECL.csv", "context_length": 3072, "prediction_length": 720, "mse": 0.186197429895401, "mae": 0.27059653401374817}
