@@ -166,3 +166,8 @@ eval_data/ECL.csv
 logs/
 pretrained_model/
 eval_data/ECL.csv
+# 忽略大训练数据
+train_data/global_temp_train.jsonl
+train_data/all_train.jsonl
+train_data/*.jsonl
+
