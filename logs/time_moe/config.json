@@ -31,7 +31,7 @@
   "rope_theta": 10000,
   "router_aux_loss_factor": 0.02,
   "tie_word_embeddings": false,
-  "torch_dtype": "float32",
+  "torch_dtype": "bfloat16",
   "transformers_version": "4.40.1",
   "use_cache": true,
   "use_dense": false

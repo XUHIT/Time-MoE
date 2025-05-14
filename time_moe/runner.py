@@ -185,23 +185,41 @@ class TimeMoeRunner:
             log_in_local_rank_0(f'Tokens will consume: {length_to_str(total_train_tokens)}')
 
         # Training
-        train_ds = self.get_train_dataset(train_config['data_path'], max_length=train_config['max_length'], normalization_method=train_config['normalization_method'])
+       
+        train_ds = self.get_train_dataset(
+            train_config["data_path"],
+            max_length=train_config["max_length"],
+            stride=train_config["stride"],
+            normalization_method=train_config["normalization_method"],
+        )
         trainer = TimeMoeTrainer(
             model=model,
             args=training_args,
             train_dataset=train_ds,
         )
+        #xhx添加，打印滑窗样本总数
+        log_in_local_rank_0(f"[样本检查] 滑窗样本总数: {len(train_ds)}")
+        ##
+
         trainer.train()
+
+        #xhx添加，打印峰值显存
+        if torch.cuda.is_available():
+            peak_mem = torch.cuda.max_memory_allocated() / (1024 ** 2)
+            log_in_local_rank_0(f"[显存] 峰值使用量：{peak_mem:.2f} MB")
+            torch.cuda.reset_peak_memory_stats()
+
+        ##
         trainer.save_model(self.output_path)
         log_in_local_rank_0(f'Saving model to {self.output_path}')
 
         return trainer.model
 
-    def get_train_dataset(self, data_path, max_length, normalization_method):
+    def get_train_dataset(self, data_path, max_length, stride, normalization_method):
         log_in_local_rank_0('Loading dataset...')
         dataset = TimeMoEDataset(data_path, normalization_method=normalization_method)
         log_in_local_rank_0('Processing dataset to fixed-size sub-sequences...')
-        window_dataset = TimeMoEWindowDataset(dataset, context_length=max_length, prediction_length=0, shuffle=False)
+        window_dataset = TimeMoEWindowDataset(dataset, context_length=max_length, prediction_length=0,stride=stride, shuffle=False)
         return window_dataset
 
 

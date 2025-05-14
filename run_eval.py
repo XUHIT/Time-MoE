@@ -207,7 +207,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--model', '-m',
         type=str,
-        default='pretrained_model/TimeMoE-50M',
+        default='logs/time_moe',
         choices=['pretrained_model/TimeMoE-50M', 'logs/time_moe','pretrained_model/TimeMoE-200M'],
         help='Model path'
     )

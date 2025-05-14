@@ -5,8 +5,14 @@ from time_moe.runner import TimeMoeRunner
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_path', '-d', type=str,default='train_data/ETTh1.jsonl', help='Path to training data')
-    parser.add_argument('--model_path', '-m', type=str, default='pretrained_model/TimeMoE-50M', help='Path to pretrained model. Default: Maple728/TimeMoE-50M')
+    parser.add_argument('--model_path', '-model', type=str, default='pretrained_model/TimeMoE-50M', help='Path to pretrained model. Default: Maple728/TimeMoE-50M')
     parser.add_argument('--output_path', '-o', type=str, default='logs/time_moe')
+    parser.add_argument(
+        "--stride",
+        type=int,
+        default=None,
+        help="滑动时间序列窗口的步长。如果没有指定 stride 参数，则默认使用 max_length 作为步长",
+    )
     parser.add_argument('--max_length', type=int, default=4096)
     parser.add_argument('--learning_rate', type=float, default=5e-5, help='learning rate')
     parser.add_argument('--min_learning_rate', type=float, default=0, help='minimum learning rate')
@@ -23,7 +29,7 @@ if __name__ == '__main__':
     parser.add_argument('--warmup_steps', type=int, default=0, help='warmup steps')
     parser.add_argument('--weight_decay', type=float, default=0.1, help='weight decay')
     
-    parser.add_argument('--global_batch_size', type=int, default=1, help='global batch size')
+    parser.add_argument('--global_batch_size', type=int, default=128, help='global batch size')
     parser.add_argument('--micro_batch_size', type=int, default=1, help='micro batch size per device')
     
     parser.add_argument('--precision', choices=['fp32', 'fp16', 'bf16'], type=str, default='fp32', help='precision mode (default: fp32)')
@@ -60,6 +66,7 @@ if __name__ == '__main__':
     runner.train_model(
         from_scratch=args.from_scratch,
         max_length=args.max_length,
+        stride=args.stride, 
         data_path=args.data_path,
         normalization_method=args.normalization_method,
         attn_implementation=args.attn_implementation,
