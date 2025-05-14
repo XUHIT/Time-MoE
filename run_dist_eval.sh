@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # 设置使用的 GPU（根据你机器情况修改）
-export CUDA_VISIBLE_DEVICES=0,1
+export CUDA_VISIBLE_DEVICES=0
 
 # 通用参数
-BATCH_SIZE=32
-GPUS=2  # 使用的 GPU 数量
+BATCH_SIZE=512
+GPUS=1  # 使用的 GPU 数量
 
 # 模型列表（可以加入更多模型路径）
 MODEL_LIST=(
   # "pretrained_model/TimeMoE-50M"
-  "pretrained_model/TimeMoE-200M"
+  "pretrained_model/TimeMoE-50M"
 )
 
 # 数据集列表
@@ -25,7 +25,7 @@ DATA_LIST=(
 )
 
 # 预测长度列表
-PRED_LEN_LIST=(96 192 336 720)
+PRED_LEN_LIST=(96)
 
 # 三重循环：模型 × 数据集 × 预测长度
 for MODEL_PATH in "${MODEL_LIST[@]}"; do

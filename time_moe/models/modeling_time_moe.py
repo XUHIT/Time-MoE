@@ -12,7 +12,10 @@ from transformers.modeling_outputs import MoeModelOutputWithPast, MoeCausalLMOut
 from transformers.utils import logging, is_flash_attn_2_available, is_flash_attn_greater_or_equal_2_10
 
 from .configuration_time_moe import TimeMoeConfig
-from .ts_generation_mixin import TSGenerationMixin
+
+# from .ts_generation_mixin import TSGenerationMixin
+
+from .ts_generation_mixin_zhushi import TSGenerationMixin
 
 logger = logging.get_logger(__name__)
 
@@ -944,6 +947,9 @@ class TimeMoeForPrediction(TimeMoePreTrainedModel, TSGenerationMixin):
         self.apply_aux_loss = config.apply_aux_loss
         self.num_experts_per_tok = config.num_experts_per_tok
         self.router_aux_loss_factor = config.router_aux_loss_factor
+        #调度配置
+        self.schedule_strategy = "reverse_greedy"  # 可选 "greedy", "reverse_greedy"
+
 
         self.model = TimeMoeModel(config)
         # output layer
@@ -1036,6 +1042,7 @@ class TimeMoeForPrediction(TimeMoePreTrainedModel, TSGenerationMixin):
             if max_horizon_length is None:
                 horizon_length = self.config.horizon_lengths[0]
                 max_horizon_length = horizon_length
+            # 贪心调度，选择一次
             else:
                 horizon_length = self.config.horizon_lengths[0]
                 for h in self.config.horizon_lengths[1:]:
@@ -1043,7 +1050,10 @@ class TimeMoeForPrediction(TimeMoePreTrainedModel, TSGenerationMixin):
                         break
                     else:
                         horizon_length = h
+
+
             lm_head = self.lm_heads[self.horizon_length_map[horizon_length]]
+
             predictions = lm_head(hidden_states)
             if horizon_length > max_horizon_length:
                 predictions = predictions[:, :, : self.config.input_size * max_horizon_length]

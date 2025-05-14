@@ -207,21 +207,21 @@ if __name__ == '__main__':
     parser.add_argument(
         '--model', '-m',
         type=str,
-        default='pretrained_model/TimeMoE-200M',
+        default='pretrained_model/TimeMoE-50M',
         choices=['pretrained_model/TimeMoE-50M', 'logs/time_moe','pretrained_model/TimeMoE-200M'],
         help='Model path'
     )
     parser.add_argument(
         '--data', '-d',
         type=str,
-        default='eval_data/ECL.csv',
+        default='eval_data/ETTh1.csv',
         help='Benchmark data path'
     )
 
     parser.add_argument(
         '--batch_size', '-b',
         type=int,
-        default=128,
+        default=32,
         help='Batch size of evaluation'
     )
     parser.add_argument(
@@ -232,7 +232,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--prediction_length', '-p',
         type=int,
-        default=720,
+        default=96,
         help='Prediction length'
     )
     args = parser.parse_args()
