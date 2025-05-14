@@ -41,3 +41,6 @@
 {"model": "logs/time_moe", "data": "eval_data/ETTm2.csv", "context_length": 512, "prediction_length": 96, "mse": 0.17740383744239807, "mae": 0.2759539484977722}
 #max=4096,global=128,micro=8
 
+{"model": "logs/time_moe_50m", "data": "eval_data/ETTm2.csv", "context_length": 512, "prediction_length": 96, "mse": 0.1793656051158905, "mae": 0.27765128016471863}
+{"model": "logs/time_moe_50m", "data": "eval_data/ETTm2.csv", "context_length": 512, "prediction_length": 96, "mse": 0.18394602835178375, "mae": 0.284660667181015}
+{"model": "logs/time_moe_50m", "data": "eval_data/ETTm2.csv", "context_length": 512, "prediction_length": 96, "mse": 0.18394602835178375, "mae": 0.284660667181015}
